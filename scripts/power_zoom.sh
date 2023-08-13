@@ -125,6 +125,7 @@ power_zoom() {
             exit 0
         fi
         this_id="$($TMUX_BIN display -p '#D')"
+        current_window_name="$($TMUX_BIN display-message -p '#W')"
         #
         #  the place-holder pane will close when it's process is terminated,
         #  so keep a long sleep going for ever in a loop.
@@ -148,7 +149,7 @@ power_zoom() {
         set_pz_status "$(read_pz_status) $placholder_pane_id=$this_id"
         $TMUX_BIN select-pane -t "$this_id"
         $TMUX_BIN break-pane # move it to new window
-        $TMUX_BIN rename-window "ZOOMED $this_id"
+        $TMUX_BIN rename-window "$current_window_name[Z$this_id]"
     fi
 }
 
